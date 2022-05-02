@@ -8,9 +8,9 @@ const app = express();
 
 
 // for user Routes
-const userRoutes = require('./')
+const userRoute = require('./routes/userRoutes')
 
-
+app.use('/',userRoute)
 
 
 app.listen(3000,function(){

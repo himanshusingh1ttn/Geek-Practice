@@ -9,4 +9,4 @@ const loadRegister = async (req,res)=>{
     }
 
 }
-module.exports = loadRegister;
+module.exports = {loadRegister};
