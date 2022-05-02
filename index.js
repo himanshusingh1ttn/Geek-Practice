@@ -9,7 +9,7 @@ const app = express();
 
 // for user Routes
 const userRoutes = require('./')
-app.use('/',)
+
 
 
 
