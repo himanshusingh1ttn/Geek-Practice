@@ -21,15 +21,15 @@ const sendVerifyMail=async(name,email,userId)=>{
             secure:false,
             requireTLS:true,
             auth:{
-                user:'bhaskar.fulara@tothenew.com',
-                pass:''
+                user:'himanshu.singh1@tothenew.com',
+                pass:'atcsnaadbwhsoyor'
             }
         });
         const mailOptions={
-            from:'bhaskar.fulara@tothenew.com',
+            from:'himanshu.singh1@tothenew.com',
             to:email,
             subject:'for verification mail',
-            html:'<p>Hi'+name+',please click here to <a href="http://127.0.0.1:3000/verify?id= '+userId+'"> Verify </a> your mail.</p>'
+            html:'<p>Hi'+name+',please click here to <a href="http://127.0.0.1:3000/verify?id='+userId+'"> Verify </a> your mail.</p>'
         }
         transporter.sendMail(mailOptions,function(error,info){
             if(error){
@@ -94,5 +94,64 @@ const verifyMail=async(req,res)=>{
     }
 }
 
+//login user method start 
 
-module.exports = {loadRegister,insertUser,verifyMail};
+const loginLoad = async(req,res)=>{
+    try{
+      res.render('login');
+    }catch(err){
+        console.log(err.message);
+    }
+}
+
+
+const verifyLogin = async(req,res) => {
+    try{
+        const email = req.body.email;
+        const password= req.body.password;
+
+       const userData =  await User.findOne({email:email});
+       if(userData){
+          const passwordmatch = await bcrypt.compare(password,userData.password);
+          if(passwordmatch){
+              if(userData.is_verified===0){
+                res.render('login',{message:"Please verify your mail"});
+              }
+              else{
+                  req.session.user_id = userData._id;
+
+                 res.redirect('/home');
+              }
+          }
+          else{
+            res.render('login',{message:"Email and password is incorrect"});
+          }
+       }
+       else{
+           res.render('login',{message:"Email and password is incorrect"});
+       }
+    }
+    catch(err){
+        console.log(err.message);
+    }
+}
+
+const loadHome = async(req,res)=>{
+    try {
+        res.render('home');
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const userLogout = async(req,res)=>{
+    try {
+        req.session.destroy();
+        res.redirect('/');
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+module.exports = {loadRegister,insertUser,verifyMail,loginLoad,verifyLogin,loadHome,userLogout};
