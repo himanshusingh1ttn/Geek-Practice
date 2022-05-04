@@ -278,5 +278,35 @@ const sentVerificationLink=async(req,res)=>{
     }
 }
 
+//User profile edit
+const editLoad=async(req,res)=>{
+    try {
+        const id=req.query.id;
+        const userData=await User.findById({_id:id})
+        if(userData){
+            res.render('edit',{user:userData});
+        }
+        else{
+            res.redirect('/home')
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
-module.exports = {loadRegister,insertUser,verifyMail,loginLoad,verifyLogin,loadHome,userLogout,forgetLoad,forgetVerify,forgetPasswordLoad,resetPassword,verificationLoad,sentVerificationLink};
+const updateProfile=async(req,res)=>{
+    try {
+        if(req.file){
+            const userData=await User.findByIdAndUpdate({_id:req.body.user_id},{$set:{name:req.body.name,email:req.body.email,mobile:req.body.mobile,image:req.file.filename}})
+            console.log(userData)        
+        }
+        else{
+            const userData=await User.findByIdAndUpdate({_id:req.body.user_id},{$set:{name:req.body.name,email:req.body.email,mobile:req.body.mobile}})
+        }
+        res.redirect('/home');
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+module.exports = {loadRegister,insertUser,verifyMail,loginLoad,verifyLogin,loadHome,userLogout,forgetLoad,forgetVerify,forgetPasswordLoad,resetPassword,verificationLoad,sentVerificationLink,editLoad,updateProfile};
