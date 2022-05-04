@@ -12,6 +12,11 @@ const userRoute = require('./routes/userRoutes')
 
 app.use('/',userRoute)
 
+// for admin Routes
+const adminRoute = require('./routes/adminRoute')
+
+app.use('/admin',adminRoute);
+
 
 app.listen(3000,function(){
  console.log("Server is Running ...");
