@@ -252,5 +252,30 @@ const resetPassword=async(req,res)=>{
     }
 }
 
+const verificationLoad=async(req,res)=>{
+    try {
+        res.render('verification')
+    } catch (error) {
+        console.log(error.message);
+        
+    }
+}
 
-module.exports = {loadRegister,insertUser,verifyMail,loginLoad,verifyLogin,loadHome,userLogout,forgetLoad,forgetVerify,forgetPasswordLoad,resetPassword};
+const sentVerificationLink=async(req,res)=>{
+    try {
+        const email=req.body.email;
+        const userData=await User.findOne({email:email});
+        if(userData){
+            sendVerifyMail(userData.name,userData.email,userData._id);
+            res.render('verification',{message:"Verification mail sent,check your mail"})
+        }
+        else{
+            res.render('verification',{message:"Mail not valid"})
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+module.exports = {loadRegister,insertUser,verifyMail,loginLoad,verifyLogin,loadHome,userLogout,forgetLoad,forgetVerify,forgetPasswordLoad,resetPassword,verificationLoad,sentVerificationLink};
