@@ -1,7 +1,21 @@
 <% include('../layouts/header.ejs')%>
 
-<h1>Welcome to the home page</h1>
-
+<h3>Welcome, <%= user.name %></h3>
+<table width="50%">
+    <tr>
+        <td><img src="userImages/<%= user.image%>" height="200px" width="500px" alt="<%= user.image%>"></td>
+        
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td><%= user.email%></td>
+    </tr>
+    <tr>
+        <td>Mobile</td>
+        <td><%= user.mobile%></td>
+    </tr>
+    
+</table>
 <a href="/logout">Logout</a>
 
 <% include('../layouts/footer.ejs')%>

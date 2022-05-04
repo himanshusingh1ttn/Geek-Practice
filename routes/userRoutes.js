@@ -18,6 +18,8 @@ user_route.use(bodyParser.urlencoded({extended:true}));
 
 const path=require('path')
 
+user_route.use(express.static('public'));
+
 const multer=require('multer');
 const storage=multer.diskStorage({destination:function(req,file,cb){
     cb(null,path.join(__dirname,'../public/userImages'))
