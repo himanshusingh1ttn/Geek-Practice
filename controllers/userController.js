@@ -4,6 +4,8 @@ const bcrypt=require('bcrypt')
 
 const nodemailer=require('nodemailer');
 const Mail = require('nodemailer/lib/mailer');
+const randomstring=require('randomstring')
+const config=require('../config/config')
 const securePassword=async(password)=>{
     try {
         const passwordHash=await bcrypt.hash(password,10);
@@ -21,12 +23,12 @@ const sendVerifyMail=async(name,email,userId)=>{
             secure:false,
             requireTLS:true,
             auth:{
-                user:'himanshu.singh1@tothenew.com',
-                pass:'atcsnaadbwhsoyor'
+                user:config.emailUser,
+                pass:config.emailPass
             }
         });
         const mailOptions={
-            from:'himanshu.singh1@tothenew.com',
+            from:config.emailUser,
             to:email,
             subject:'for verification mail',
             html:'<p>Hi'+name+',please click here to <a href="http://127.0.0.1:3000/verify?id='+userId+'"> Verify </a> your mail.</p>'
@@ -154,4 +156,101 @@ const userLogout = async(req,res)=>{
     }
 }
 
-module.exports = {loadRegister,insertUser,verifyMail,loginLoad,verifyLogin,loadHome,userLogout};
+
+// forget password 
+const forgetLoad=async(req,res)=>{
+    try{
+        res.render('forget');
+    }
+    catch(error){
+        console.log(error.message);
+    }
+}
+
+const forgetVerify=async(req,res)=>{
+    try{
+        const email=req.body.email;
+        const userData=await User.findOne({email:email});
+        if(userData){
+            
+            if(userData.is_verified===0){
+                res.render('forget',{message:"Not Verfied.Verify your mail."});
+            }
+            else{
+                const randomString=randomstring.generate();
+                const updatedData=await User.updateOne({email:email},{$set:{token:randomString}});
+                sendResetPasswordMail(userData.name,userData.email,randomString);
+                res.render('forget',{message:"Please check your mail to reset password."})
+            }
+        }
+        else{
+            res.render('forget',{message:"User Mail is incorrect"});
+        }
+    }
+    catch(error){
+        console.log(error.message);
+    }
+}
+
+//For reset password sent mail
+const sendResetPasswordMail=async(name,email,token)=>{
+    try {
+        const transporter=nodemailer.createTransport({
+            host:'smtp.gmail.com',
+            port:'587',
+            secure:false,
+            requireTLS:true,
+            auth:{
+                user:config.emailUser,
+                pass:config.emailPass
+            }
+        });
+        const mailOptions={
+            from:config.emailUser,
+            to:email,
+            subject:'For reset password',
+            html:'<p>Hi'+name+',please click here to <a href="http://127.0.0.1:3000/forget-password?token='+token+'">Reset</a> your password.</p>'
+        }
+        transporter.sendMail(mailOptions,function(error,info){
+            if(error){
+                console.log(error);
+            }
+            else{
+                console.log("Mail has been sent",info.response);
+            }
+        })
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const forgetPasswordLoad=async(req,res)=>{
+    try {
+        const token =req.query.token;
+        const tokenData=await User.findOne({token:token})
+        if(tokenData){
+            res.render('forget-password',{user_id:tokenData._id}); 
+        }
+        else{
+            res.render('404',{message:"Token is invalid"});
+        }
+    } catch (error) {
+        console.log(error.message);
+        
+    }
+}
+
+const resetPassword=async(req,res)=>{
+    try {
+        const password=req.body.password;
+        const user_id=req.body.user_id;
+        const secure_password=await securePassword(password);
+        const updatedData=await User.findByIdAndUpdate({_id:user_id},{$set:{password:secure_password,token:''}});
+        res.redirect('/');
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+module.exports = {loadRegister,insertUser,verifyMail,loginLoad,verifyLogin,loadHome,userLogout,forgetLoad,forgetVerify,forgetPasswordLoad,resetPassword};
