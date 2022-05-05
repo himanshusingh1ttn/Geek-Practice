@@ -6,7 +6,8 @@
 <% include('../layouts/header.ejs')%>
 
 <h1>Welcome, <%= admin.name %></h1>
-<a href = "/admin/dashboard">Dashboard</a>
+<a href = "/admin/dashboard">Dashboard</a><br><br>
+
 <table style="width:50%;">
     <tr>
         <td><img src="/userImages/<%=  admin.image %>" height="200px" width="200px" alt="<%= admin.image %>"></td>
@@ -24,6 +25,7 @@
 </table>
 
 <a href="/edit?id=<%= admin._id%>">Edit</a><br>
+
 <a href="/logout">Logout</a>
 
 <% include("../layouts/footer.ejs") %>
