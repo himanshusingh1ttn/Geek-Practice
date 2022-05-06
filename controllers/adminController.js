@@ -243,7 +243,6 @@ const editUserLoad=async(req,res)=>{
         const user= await User.findById({_id:id})
         if(user){
             res.render('edit-user',{user:user});
-
         }
         else{
             res.redirect('/admin/dashboard')
@@ -273,4 +272,39 @@ const deleteUser=async(req,res)=>{
     }
 }
 
-module.exports={loadLogin,verifyLogin,loadDashboard,logout,forgetLoad,forgetVerify,forgetPasswordLoad,resetPassword,admindashboard,newUserLoad,addUser,editUserLoad,updateUsers,deleteUser}
+const loadInterview=async(req,res)=>{
+    try {
+        res.render('interview');
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+const loadFindTrainee=async(req,res)=>{
+    try {
+        res.render('find-trainee');
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+const loadaddVideo=async(req,res)=>{
+    try {
+        res.render('addVideo');
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+
+const loadscheduledInterview=async(req,res)=>{
+    try {
+        res.render('scheduledInterview');
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+
+
+module.exports={loadLogin,verifyLogin,loadDashboard,logout,forgetLoad,forgetVerify,forgetPasswordLoad,resetPassword,admindashboard,newUserLoad,addUser,editUserLoad,updateUsers,deleteUser,loadInterview,loadFindTrainee,loadaddVideo,loadscheduledInterview}
