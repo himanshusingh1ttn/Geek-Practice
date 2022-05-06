@@ -47,6 +47,8 @@ user_route.get('/login',auth.isLogout,userController.loginLoad);
 
 user_route.post('/login',userController.verifyLogin);
 
+
+user_route.get('/mentorHome',auth.isLogin,userController.loadMentorHome)
 user_route.get('/home',auth.isLogin,userController.loadHome);
 
 user_route.get('/logout',auth.isLogin,userController.userLogout);

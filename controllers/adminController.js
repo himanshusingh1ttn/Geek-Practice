@@ -213,10 +213,15 @@ const addUser=async(req,res)=>{
         const email=req.body.email;
         const mobile=req.body.mno;
         const image=req.file.filename;
+        const desig=req.body.desig;
+        const mentor=0;
+        if(desig == 'Mentor'){
+            Mentor=1;
+        }
         const password=randomstring.generate(8);
         const spass=await securePassword(password);
         const user=new User({
-            name:name,email:email,mobile:mobile,image:image,password:spass,is_admin:0
+            name:name,email:email,mobile:mobile,image:image,password:spass,is_admin:0,is_Mentor:mentor
         })
         const userData=await user.save();
         if(userData){

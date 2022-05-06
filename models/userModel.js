@@ -25,6 +25,10 @@ const userSchema = new mongoose.Schema({
         type:Number,
         required:true
     },
+    is_Mentor:{
+        type:Number,
+        required:true
+    },
     is_verified:{
         type:Number,
         default:0

@@ -117,12 +117,18 @@ const verifyLogin = async(req,res) => {
           const passwordmatch = await bcrypt.compare(password,userData.password);
           if(passwordmatch){
               if(userData.is_verified===0){
+                  
                 res.render('login',{message:"Please verify your mail"});
               }
               else{
-                  req.session.user_id = userData._id;
+                req.session.user_id = userData._id;
+                if(userData.is_Mentor==0){
+                    res.redirect('/home');
+                }
+                else{
+                    res.redirect('/mentorHome')
+                }
 
-                 res.redirect('/home');
               }
           }
           else{
@@ -309,4 +315,14 @@ const updateProfile=async(req,res)=>{
     }
 }
 
-module.exports = {loadRegister,insertUser,verifyMail,loginLoad,verifyLogin,loadHome,userLogout,forgetLoad,forgetVerify,forgetPasswordLoad,resetPassword,verificationLoad,sentVerificationLink,editLoad,updateProfile};
+
+const loadMentorHome=async(req,res)=>{
+    try {
+        const userData=await User.findById({_id:req.session.user_id})
+        res.render('mentorHome',{user:userData});
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+module.exports = {loadRegister,insertUser,verifyMail,loginLoad,verifyLogin,loadHome,userLogout,forgetLoad,forgetVerify,forgetPasswordLoad,resetPassword,verificationLoad,sentVerificationLink,editLoad,updateProfile,loadMentorHome};
