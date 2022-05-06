@@ -67,6 +67,15 @@ user_route.post('/verification',userController.sentVerificationLink)
 
 user_route.get('/edit',auth.isLogin,userController.editLoad)
 
+user_route.get('/check-course',auth.isLogin,userController.loadCheckCourse)
+
+
+user_route.get('/scheduledInterview',auth.isLogin,userController.loadScheduledInterview)
+
+user_route.get('/findTrainee',auth.isLogin,userController.loadfindTrainee)
+
+user_route.get('/AddVideo',auth.isLogin,userController.loadAddVideo)
+
 user_route.post('/edit',upload.single('image'),userController.updateProfile)
 
 module.exports = user_route;

@@ -325,4 +325,37 @@ const loadMentorHome=async(req,res)=>{
     }
 }
 
-module.exports = {loadRegister,insertUser,verifyMail,loginLoad,verifyLogin,loadHome,userLogout,forgetLoad,forgetVerify,forgetPasswordLoad,resetPassword,verificationLoad,sentVerificationLink,editLoad,updateProfile,loadMentorHome};
+
+const loadCheckCourse=async(req,res)=>{
+    try {
+        res.render('checkCourse');
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const loadScheduledInterview=async(req,res)=>{
+    try {
+        res.render('scheduledInterview');
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const loadfindTrainee=async(req,res)=>{
+    try {
+        res.render('findTrainee');
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const loadAddVideo=async(req,res)=>{
+    try {
+        res.render('addVideo');
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+module.exports = {loadRegister,insertUser,verifyMail,loginLoad,verifyLogin,loadHome,userLogout,forgetLoad,forgetVerify,forgetPasswordLoad,resetPassword,verificationLoad,sentVerificationLink,editLoad,updateProfile,loadMentorHome,loadCheckCourse,loadScheduledInterview,loadfindTrainee,loadAddVideo};
