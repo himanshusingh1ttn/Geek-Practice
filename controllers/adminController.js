@@ -280,14 +280,6 @@ const loadInterview=async(req,res)=>{
     }
 }
 
-const loadFindTrainee=async(req,res)=>{
-    try {
-        res.render('find-trainee');
-    } catch (error) {
-        console.log(error.message)
-    }
-}
-
 const loadaddVideo=async(req,res)=>{
     try {
         res.render('addVideo');
@@ -307,4 +299,4 @@ const loadscheduledInterview=async(req,res)=>{
 
 
 
-module.exports={loadLogin,verifyLogin,loadDashboard,logout,forgetLoad,forgetVerify,forgetPasswordLoad,resetPassword,admindashboard,newUserLoad,addUser,editUserLoad,updateUsers,deleteUser,loadInterview,loadFindTrainee,loadaddVideo,loadscheduledInterview}
+module.exports={loadLogin,verifyLogin,loadDashboard,logout,forgetLoad,forgetVerify,forgetPasswordLoad,resetPassword,admindashboard,newUserLoad,addUser,editUserLoad,updateUsers,deleteUser,loadInterview,loadaddVideo,loadscheduledInterview,}

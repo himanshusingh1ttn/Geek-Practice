@@ -73,6 +73,7 @@ user_route.get('/check-course',auth.isLogin,userController.loadCheckCourse)
 user_route.get('/scheduledInterview',auth.isLogin,userController.loadScheduledInterview)
 
 user_route.get('/findTrainee',auth.isLogin,userController.loadfindTrainee)
+user_route.post('/findTrainee',userController.loadfindTraineeRes)
 
 user_route.get('/AddVideo',auth.isLogin,userController.loadAddVideo)
 

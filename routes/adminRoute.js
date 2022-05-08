@@ -63,7 +63,6 @@ admin_route.post('/edit-user',adminController.updateUsers);
 
 admin_route.get('/interview',auth.isLogin,adminController.loadInterview);
 
-admin_route.get('/find-trainee',auth.isLogin,adminController.loadFindTrainee);
 
 admin_route.get('/add-video',auth.isLogin,adminController.loadaddVideo);
 
