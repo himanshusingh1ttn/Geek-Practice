@@ -36,8 +36,14 @@ const userSchema = new mongoose.Schema({
     token:{
         type:String,
         default:''
-    }
+    },
+    videos:[{
+        tittle:{type:String,required:true},
+        desc:{type:String},
+        video:{type:String,required:true}
+    }]
 });
+
 
 
 module.exports= mongoose.model('User',userSchema);

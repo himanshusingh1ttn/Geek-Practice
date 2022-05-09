@@ -288,6 +288,21 @@ const loadaddVideo=async(req,res)=>{
     }
 }
 
+const addVideo=async(req,res)=>{
+    try {
+        const video=req.file.filename;
+        const tittle=req.body.title;
+        const desc=req.body.description;
+        const user=req.session.user_id;
+        const data={tittle:tittle,desc:desc,video:video};
+        const updatedData= await User.findOneAndUpdate({_id:user}, {$push: {videos: data}});
+        res.redirect('/admin/add-video');
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 
 const loadscheduledInterview=async(req,res)=>{
     try {
@@ -299,4 +314,8 @@ const loadscheduledInterview=async(req,res)=>{
 
 
 
-module.exports={loadLogin,verifyLogin,loadDashboard,logout,forgetLoad,forgetVerify,forgetPasswordLoad,resetPassword,admindashboard,newUserLoad,addUser,editUserLoad,updateUsers,deleteUser,loadInterview,loadaddVideo,loadscheduledInterview,}
+
+module.exports={loadLogin,verifyLogin,loadDashboard,logout,forgetLoad,forgetVerify,forgetPasswordLoad,resetPassword,admindashboard,newUserLoad,addUser,editUserLoad,updateUsers,deleteUser,loadInterview,loadaddVideo,loadscheduledInterview,addVideo}
+
+
+

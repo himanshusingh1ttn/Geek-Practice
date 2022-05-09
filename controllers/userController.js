@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 
+
 const bcrypt = require('bcrypt')
 
 const nodemailer = require('nodemailer');
@@ -345,7 +346,7 @@ const loadScheduledInterview = async (req, res) => {
 const loadfindTrainee = async (req, res) => {
     try {
         const userData = await User.find({ is_mentor: 0, is_admin: 0 })
-        res.render('findTrainee', { users: userData});
+        res.render('findTrainee', { users : userData });
     } catch (error) {
         console.log(error.message);
     }
@@ -362,15 +363,12 @@ const loadAddVideo = async (req, res) => {
 const loadfindTraineeRes = async (req, res) => {
     try {
         const data = req.body.trainee;
-
-
         if (data.endsWith(".com")) {
-            const userData = await User.find({ email: { $regex: req.body.trainee},is_Mentor:0,is_admin:0});
+            const userData = await User.find({email:{$regex: req.body.trainee},is_Mentor:0,is_admin:0});
             if (userData.length > 0) {
-                res.render('findTrainee', { users: userData, });
+                res.render('findTrainee', { users: userData});
             }
         }
-        
         const users = await User.find({ name: { $regex: req.body.trainee },is_Mentor:0,is_admin:0});
         if (users.length > 0) {
             res.render('findTrainee', { users: users});
@@ -378,7 +376,6 @@ const loadfindTraineeRes = async (req, res) => {
         else{
             res.render('findTrainee',{users:users});
         }
-
     } catch (error) {
         console.log(error.message);
     }

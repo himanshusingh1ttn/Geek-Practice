@@ -24,8 +24,16 @@ const path=require('path')
 admin_route.use(express.static('public'));
 
 const multer=require('multer');
-const storage=multer.diskStorage({destination:function(req,file,cb){
-    cb(null,path.join(__dirname,'../public/userImages'))
+const storage=multer.diskStorage(
+    {
+        destination:function(req,file,cb){
+            if(file.originalname.endsWith(".mp4")){
+                cb(null,path.join(__dirname,'../public/userVideo'))
+            }
+            else{
+                
+                cb(null,path.join(__dirname,'../public/userImages'))
+            }
     },
     filename:function(req,file,cb){
         const name=Date.now()+'-'+file.originalname;
@@ -65,6 +73,7 @@ admin_route.get('/interview',auth.isLogin,adminController.loadInterview);
 
 
 admin_route.get('/add-video',auth.isLogin,adminController.loadaddVideo);
+admin_route.post('/add-video',upload.single('video'),adminController.addVideo);
 
 admin_route.get('/scheduledInterview',auth.isLogin,adminController.loadscheduledInterview);
 
