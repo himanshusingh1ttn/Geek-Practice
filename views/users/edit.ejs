@@ -1,4 +1,4 @@
-<% include('../layouts/header.ejs')%>
+<%- include('../layouts/header.ejs')%>
 <img src="userImages/<%= user.image %>" width="50%" height="50%" alt="<%=user.image%>"><br><br>
 
 <form action="/edit " method="POST" enctype="multipart/form-data">

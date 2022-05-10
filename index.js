@@ -4,8 +4,8 @@ mongoose.connect("mongodb://127.0.0.1:27017/geekCombatdatabase");
 const express = require("express");
 const app = express();
 
-
-
+//for css file
+app.use(express.static(__dirname + './public'));
 
 // for user Routes
 const userRoute = require('./routes/userRoutes')
